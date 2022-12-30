@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { Details } from '../../routes';
 import { IRootState } from '../../store';
 import Pagination from '../../components/Pagination/Pagination';
 
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery /*, useQueryClient */ } from 'react-query';
 
 export interface IImage {
   id: string;
@@ -22,9 +22,9 @@ const List = () => {
   const limit = useSelector((state: IRootState) => state.pagination.limit);
   const page = useSelector((state: IRootState) => state.pagination.page);
 
-  const [images, setImages] = useState<IImage[]>();
+  //   const [images, setImages] = useState<IImage[]>();
 
-  const queryClient = useQueryClient();
+  //   const queryClient = useQueryClient();
   const queryKey = 'images';
   const queryFn = () => fetch(`https://picsum.photos/v2/list?page=${page}&limit=${limit}`).then((res) => res.json());
   const result = useQuery(queryKey, queryFn);
