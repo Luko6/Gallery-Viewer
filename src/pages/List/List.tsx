@@ -1,7 +1,11 @@
+import { useSelector } from 'react-redux';
+
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { Details } from '../../routes';
+import { IRootState } from '../../store';
+import Pagination from '../../components/Pagination/Pagination';
 
 export interface IImage {
   id: string;
@@ -13,8 +17,8 @@ export interface IImage {
 }
 
 const List = () => {
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(25);
+  const limit = useSelector((state: IRootState) => state.pagination.limit);
+  const page = useSelector((state: IRootState) => state.pagination.page);
 
   const [images, setImages] = useState<IImage[]>();
 
@@ -35,32 +39,13 @@ const List = () => {
 
   return (
     <div>
-      <label>
-        Page:
-        <input
-          value={page}
-          type='number'
-          onChange={(e) => {
-            setPage(+e.currentTarget.value);
-          }}
-        />
-      </label>
-      <label>
-        Limit:
-        <input
-          value={limit}
-          type='number'
-          onChange={(e) => {
-            setLimit(+e.currentTarget.value);
-          }}
-        />
-      </label>
+      <Pagination />
       <ul>
         {images &&
           images.map((im) => {
             return (
               <li key={im.id}>
-                <NavLink to={Details + "/" + im.id}>{im.id}</NavLink>
+                <NavLink to={Details + '/' + im.id}>{im.id}</NavLink>
                 <p>{im.author}</p>
               </li>
             );
