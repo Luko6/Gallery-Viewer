@@ -7,6 +7,8 @@ import { Details } from '../../routes';
 import { IRootState } from '../../store';
 import Pagination from '../../components/Pagination/Pagination';
 
+import { useQuery, useQueryClient } from 'react-query';
+
 export interface IImage {
   id: string;
   author: string;
@@ -22,27 +24,36 @@ const List = () => {
 
   const [images, setImages] = useState<IImage[]>();
 
-  useEffect(() => {
-    const fetchImages = async () => {
-      const res = await fetch(`https://picsum.photos/v2/list?page=${page}&limit=${limit}`);
-      const data = await res.json();
+  const queryClient = useQueryClient();
+  const queryKey = 'images';
+  const queryFn = () => fetch(`https://picsum.photos/v2/list?page=${page}&limit=${limit}`).then((res) => res.json());
+  const result = useQuery(queryKey, queryFn);
 
-      setImages(data);
-    };
+  // Continue from: https://ilxanlar.medium.com/fetch-cache-and-update-data-effortlessly-with-react-query-445e799a84e4#e303
 
-    try {
-      fetchImages();
-    } catch {
-      alert('Failed to fetch images');
-    }
-  }, [page, limit]);
+  //   useEffect(() => {
+  //     const fetchImages = async () => {
+  //       const res = await fetch(`https://picsum.photos/v2/list?page=${page}&limit=${limit}`);
+  //       const data = await res.json();
+
+  //       setImages(data);
+  //     };
+
+  //     try {
+  //       fetchImages();
+  //     } catch {
+  //       alert('Failed to fetch images');
+  //     }
+  //   }, [page, limit]);
 
   return (
     <div>
       <Pagination />
-      <ul>
-        {images &&
-          images.map((im) => {
+      {result.status === 'loading' && <div>Loading...</div>}
+      {result.status === 'error' && <div>Error...</div>}
+      {result.status === 'success' && (
+        <ul>
+          {result.data.map((im: IImage) => {
             return (
               <li key={im.id}>
                 <NavLink to={Details + '/' + im.id}>{im.id}</NavLink>
@@ -50,7 +61,8 @@ const List = () => {
               </li>
             );
           })}
-      </ul>
+        </ul>
+      )}
     </div>
   );
 };
