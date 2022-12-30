@@ -1,0 +1,13 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 4rem);
+  height: 25px;
+
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background-color: rgb(23, 85, 198);
+}

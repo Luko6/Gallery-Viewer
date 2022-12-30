@@ -1,22 +1,27 @@
-import "./App.css";
+import './App.css';
 
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
 
-import List from "./pages/List/List";
-import Navbar from "./layouts/Navbar/Navbar";
+import List from './pages/List/List';
+import Navbar from './layouts/Navbar/Navbar';
 
-import styles from "./assets/app.module.scss";
+import './assets/App.scss';
+
+import * as Links from './routes';
+import Favorites from './pages/Favorites/Favorites';
+import Detail from './pages/Detail/Detail';
 
 function App() {
   return (
-    <div className={styles.container}>
+    <div className='app-container'>
       <Navbar />
       <main>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<List />} />
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route index element={<List />} />
+          <Route path={Links.Favorites} element={<Favorites />} />
+          <Route path={Links.Details + '/:id'} element={<Detail />} />
+          <Route path='*' element={<List />} />
+        </Routes>
       </main>
     </div>
   );
