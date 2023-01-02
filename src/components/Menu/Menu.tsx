@@ -1,7 +1,7 @@
-import { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { IRootState, AppDispatch } from "../../store";
-import { paginationActions } from "../../store/pagination";
+import { useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { IRootState, AppDispatch } from '../../store';
+import { paginationActions } from '../../store/pagination';
 
 const Menu = () => {
   const limit = useSelector((state: IRootState) => state.pagination.limit);
@@ -31,15 +31,15 @@ const Menu = () => {
     <div>
       <label>
         Items per page:
-        <select onChange={handleLimit} value={limit} style={{ width: '100px' }}>
-          <option>5</option>
-          <option>10</option>
-          <option>20</option>
+        <select onChange={handleLimit} value={limit} style={{ width: '100px' }} data-testid='limit'>
+          <option data-testid="limit-5">5</option>
+          <option data-testid="limit-10">10</option>
+          <option data-testid="limit-20">20</option>
         </select>
       </label>
       <label>
         Name:
-        <input ref={queryRef} type='text' />
+        <input ref={queryRef} type='text' data-testid='query' />
         <button onClick={handleSearch}>Search</button>
         <button onClick={handleReset}>Reset</button>
       </label>
