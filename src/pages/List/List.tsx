@@ -6,10 +6,12 @@ import Beer, { IBeer } from '../../components/Beer/Beer';
 import styles from './List.module.scss';
 import { usePagination } from '../../hooks/usePagination';
 import ListingWrapper from '../../components/ListingWrapper/ListingWrapper';
+import Menu from '../../components/Menu/Menu';
+import { useMenu } from '../../hooks/useMenu';
 
 const List = () => {
-  const { limit, page, query } = usePagination();
-
+  const { page } = usePagination();
+  const { limit, query } = useMenu();
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState<IBeer[]>();
 
@@ -39,7 +41,8 @@ const List = () => {
 
   return (
     <div>
-      <Pagination />
+      <Menu />
+
       {loading && <h2>Loading...</h2>}
       {!loading && !images?.length && <h2>No beers with name {query}</h2>}
       {!loading && images && (
@@ -49,6 +52,8 @@ const List = () => {
           })}
         </ListingWrapper>
       )}
+
+      <Pagination />
     </div>
   );
 };
