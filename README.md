@@ -2,6 +2,11 @@
 
 https://punkapi.com/documentation/v2
 
+# Docker
+
+Build with `docker build . -t app`
+Start with `docker run -p 3000:3000 -d app`
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
