@@ -28,7 +28,7 @@ const Detail = () => {
     <div>
       {image ? (
         <>
-          <FavoriteToggle id={image.id} />
+          <FavoriteToggle id={image.id} name={image.name} image_url={image.image_url} />
           <p>ID: {image.id}</p>
           <p>Name: {image.name}</p>
           <img src={image.image_url} alt='something' width={200} height={300} />

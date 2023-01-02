@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store';
 import { favoriteActions } from '../../store/favorites';
+import { IBeer } from '../Beer/Beer';
 
-const FavoriteToggle = (props: { id: number }) => {
+const FavoriteToggle = (props: IBeer) => {
   const favorites = useSelector((state: IRootState) => state.favorites.favorites);
 
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ const FavoriteToggle = (props: { id: number }) => {
     return !!favorites.filter((fav) => fav.id === id).length;
   };
 
-  const handleFavorite = () => {
+  const handleFavorite = () => {    
     isFavorite(props.id)
       ? dispatch(favoriteActions.removeFavorite({ id: props.id }))
       : dispatch(favoriteActions.addFavorite(props));

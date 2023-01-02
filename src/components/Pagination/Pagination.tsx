@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, IRootState } from '../../store';
 import { paginationActions } from '../../store/pagination';
@@ -15,10 +15,6 @@ const Pagination = () => {
     dispatch(paginationActions.setPage(pageNumber));
   };
 
-  const setLimit = (limitNumber: number) => {
-    dispatch(paginationActions.setLimit(limitNumber));
-  };
-
   const handleSearch = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(paginationActions.setQuery(queryRef.current?.value));
@@ -33,6 +29,10 @@ const Pagination = () => {
     }
   };
 
+  const handleLimit = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(paginationActions.setLimit(e.currentTarget.value));
+  };
+
   return (
     <div>
       <label>
@@ -40,8 +40,12 @@ const Pagination = () => {
         <input value={page} type='number' onChange={(e) => setPage(+e.currentTarget.value)} />
       </label>
       <label>
-        Limit:
-        <input value={limit} type='number' onChange={(e) => setLimit(+e.currentTarget.value)} />
+        Items per page:
+        <select onChange={handleLimit} value={limit} style={{ width: '100px' }}>
+          <option>5</option>
+          <option>10</option>
+          <option>20</option>
+        </select>
       </label>
       <label>
         Name:

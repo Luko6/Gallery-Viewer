@@ -1,16 +1,14 @@
-import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
-import { IRootState } from '../../store';
 import Pagination from '../../components/Pagination/Pagination';
 import Beer, { IBeer } from '../../components/Beer/Beer';
 
 import styles from './List.module.scss';
+import { usePagination } from '../../hooks/usePagination';
+import ListingWrapper from '../../components/ListingWrapper/ListingWrapper';
 
 const List = () => {
-  const limit = useSelector((state: IRootState) => state.pagination.limit);
-  const page = useSelector((state: IRootState) => state.pagination.page);
-  const query = useSelector((state: IRootState) => state.pagination.query);
+  const { limit, page, query } = usePagination();
 
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState<IBeer[]>();
@@ -25,8 +23,6 @@ const List = () => {
 
       const res = await fetch(url);
       const data = await res.json();
-
-      console.log(data);
 
       setImages(data);
     };
@@ -47,11 +43,11 @@ const List = () => {
       {loading && <h2>Loading...</h2>}
       {!loading && !images?.length && <h2>No beers with name {query}</h2>}
       {!loading && images && (
-        <div className={styles.container}>
+        <ListingWrapper>
           {images.map((beer) => {
-            return <Beer id={beer.id} name={beer.name} image_url={beer.image_url} />;
+            return <Beer key={beer.id} id={beer.id} name={beer.name} image_url={beer.image_url} />;
           })}
-        </div>
+        </ListingWrapper>
       )}
     </div>
   );
