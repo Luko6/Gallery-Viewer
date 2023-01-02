@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-
-import { IImage } from '../List/List';
+import { IBeer } from '../../components/Beer/Beer';
+import FavoriteToggle from '../../components/FavoriteToggle/FavoriteToggle';
 
 const Detail = () => {
   const { id } = useParams();
 
-  const [image, setImage] = useState<IImage>();
+  const [image, setImage] = useState<IBeer>();
 
   useEffect(() => {
     const fetchDetails = async () => {
-      const res = await fetch(`https://picsum.photos/id/${id}/info`);
-      const data = await res.json();
+      // const res = await fetch(`https://picsum.photos/id/${id}/info`);
+      const res = await fetch(`https://api.punkapi.com/v2/beers/${id}`);
+      const data: IBeer[] = await res.json();
 
-      setImage(data);
+      setImage(data[0]);
     };
 
     try {
@@ -27,9 +28,10 @@ const Detail = () => {
     <div>
       {image ? (
         <>
+          <FavoriteToggle id={image.id} />
           <p>ID: {image.id}</p>
-          <p>Author: {image.author}</p>
-          <img src={image.download_url} alt='something' width={300} height={200} />
+          <p>Name: {image.name}</p>
+          <img src={image.image_url} alt='something' width={200} height={300} />
         </>
       ) : (
         <p>Loading...</p>

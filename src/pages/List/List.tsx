@@ -1,67 +1,57 @@
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
-// import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-
-import { Details } from '../../routes';
 import { IRootState } from '../../store';
 import Pagination from '../../components/Pagination/Pagination';
+import Beer, { IBeer } from '../../components/Beer/Beer';
 
-import { useQuery /*, useQueryClient */ } from 'react-query';
-
-export interface IImage {
-  id: string;
-  author: string;
-  width: string;
-  height: string;
-  url: string;
-  download_url: string;
-}
+import styles from './List.module.scss';
 
 const List = () => {
   const limit = useSelector((state: IRootState) => state.pagination.limit);
   const page = useSelector((state: IRootState) => state.pagination.page);
+  const query = useSelector((state: IRootState) => state.pagination.query);
 
-  //   const [images, setImages] = useState<IImage[]>();
+  const [loading, setLoading] = useState(false);
+  const [images, setImages] = useState<IBeer[]>();
 
-  //   const queryClient = useQueryClient();
-  const queryKey = 'images';
-  const queryFn = () => fetch(`https://picsum.photos/v2/list?page=${page}&limit=${limit}`).then((res) => res.json());
-  const result = useQuery(queryKey, queryFn);
+  useEffect(() => {
+    const fetchImages = async () => {
+      const url = `https://api.punkapi.com/v2/beers?page=${page}&per_page=${limit}${
+        query && '&beer_name=' + query.replace(' ', '_')
+      }`;
 
-  // Continue from: https://ilxanlar.medium.com/fetch-cache-and-update-data-effortlessly-with-react-query-445e799a84e4#e303
+      console.log(url);
 
-  //   useEffect(() => {
-  //     const fetchImages = async () => {
-  //       const res = await fetch(`https://picsum.photos/v2/list?page=${page}&limit=${limit}`);
-  //       const data = await res.json();
+      const res = await fetch(url);
+      const data = await res.json();
 
-  //       setImages(data);
-  //     };
+      console.log(data);
 
-  //     try {
-  //       fetchImages();
-  //     } catch {
-  //       alert('Failed to fetch images');
-  //     }
-  //   }, [page, limit]);
+      setImages(data);
+    };
+
+    try {
+      setLoading(true);
+      fetchImages();
+      setLoading(false);
+    } catch {
+      alert('Failed to fetch images');
+      setLoading(false);
+    }
+  }, [page, limit, query]);
 
   return (
     <div>
       <Pagination />
-      {result.status === 'loading' && <div>Loading...</div>}
-      {result.status === 'error' && <div>Error...</div>}
-      {result.status === 'success' && (
-        <ul>
-          {result.data.map((im: IImage) => {
-            return (
-              <li key={im.id}>
-                <NavLink to={Details + '/' + im.id}>{im.id}</NavLink>
-                <p>{im.author}</p>
-              </li>
-            );
+      {loading && <h2>Loading...</h2>}
+      {!loading && !images?.length && <h2>No beers with name {query}</h2>}
+      {!loading && images && (
+        <div className={styles.container}>
+          {images.map((beer) => {
+            return <Beer id={beer.id} name={beer.name} image_url={beer.image_url} />;
           })}
-        </ul>
+        </div>
       )}
     </div>
   );
