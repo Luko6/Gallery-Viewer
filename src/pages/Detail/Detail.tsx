@@ -10,7 +10,6 @@ const Detail = () => {
 
   useEffect(() => {
     const fetchDetails = async () => {
-      // const res = await fetch(`https://picsum.photos/id/${id}/info`);
       const res = await fetch(`https://api.punkapi.com/v2/beers/${id}`);
       const data: IBeer[] = await res.json();
 

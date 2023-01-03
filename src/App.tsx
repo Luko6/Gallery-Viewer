@@ -3,9 +3,7 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 
 import List from './pages/List/List';
-import Navbar from './layouts/Navbar/Navbar';
-
-import './assets/App.scss';
+import Navbar from './components/Navbar/Navbar';
 
 import store from './store/index';
 import * as Links from './routes';
@@ -26,15 +24,13 @@ function App() {
     <Provider store={store}>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <div className='app-container'>
-          <Navbar />
-          <Routes>
-            <Route index element={<List />} />
-            <Route path={Links.Favorites} element={<Favorites />} />
-            <Route path={Links.Details + '/:id'} element={<Detail />} />
-            <Route path='*' element={<List />} />
-          </Routes>
-        </div>
+        <Navbar />
+        <Routes>
+          <Route index element={<List />} />
+          <Route path={Links.Favorites} element={<Favorites />} />
+          <Route path={Links.Details + '/:id'} element={<Detail />} />
+          <Route path='*' element={<List />} />
+        </Routes>
       </ThemeProvider>
     </Provider>
   );

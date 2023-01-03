@@ -51,7 +51,7 @@ const Menu = () => {
             width: { xs: '100%', sm: 'unset' },
           }}
         >
-          <TextField inputRef={queryRef} label='Name' variant='outlined' data-testid='query' sx={{ width: '100%' }} />
+          <TextField inputRef={queryRef} label='Search by Name' variant='outlined' data-testid='query' sx={{ width: '100%' }} />
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Button variant='contained' onClick={handleSearch}>
               Search
