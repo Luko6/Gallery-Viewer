@@ -7,9 +7,9 @@ import { useSelector } from 'react-redux';
 import { IRootState } from '../../store';
 import BeerGrid from '../../components/BeerGrid/BeerGrid';
 import PageNavigation from '../../components/PageNavigation/PageNavigation';
+import { Box } from '@mui/material';
 
 const List = () => {
-  // MaxCount = 325
   const { limit, query } = useMenu();
   const [loading, setLoading] = useState(false);
   const [beers, setBeers] = useState<IBeer[]>();
@@ -40,12 +40,12 @@ const List = () => {
 
   return (
     <>
-      <div style={{ padding: '2rem' }}>
+      <Box style={{ padding: '2rem' }}>
         <Menu />
         {loading && <h2>Loading...</h2>}
         {!loading && !beers?.length && <h2>No beers with name {query}</h2>}
         {!loading && beers && <BeerGrid beers={beers} />}
-      </div>
+      </Box>
       <PageNavigation />
     </>
   );

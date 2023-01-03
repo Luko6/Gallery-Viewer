@@ -37,7 +37,7 @@ const Navbar = () => {
             }}
           >
             <NavLink style={navStyle} to={Route.List}>
-              Home
+              B33R
             </NavLink>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -85,7 +85,30 @@ const Navbar = () => {
               </MenuItem>
             </Menu>
           </Box>
+          <Typography
+            variant='h5'
+            noWrap
+            component='a'
+            href=''
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            B33R
+          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+              <NavLink style={navStyle} to={Route.List}>
+                Home
+              </NavLink>
+            </Button>
             <Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
               <NavLink style={navStyle} to={Route.Favorites}>
                 Favorites

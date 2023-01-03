@@ -6,7 +6,7 @@ const BeerGrid = (props: { beers: IBeer[] }) => {
     <Grid container spacing={1.5}>
       {props.beers.map((beer) => {
         return (
-          <Grid item xs={12 / 2} lg={12 / 5} md={12 / 3}>
+          <Grid item xs={12 / 1} sm={12 / 2} md={12 / 3} lg={12 / 5}>
             <Beer key={beer.id} id={beer.id} name={beer.name} image_url={beer.image_url} />
           </Grid>
         );
