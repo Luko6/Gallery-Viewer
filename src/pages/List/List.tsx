@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import Pagination from '../../components/Pagination/Pagination';
 import Beer, { IBeer } from '../../components/Beer/Beer';
 
-import styles from './List.module.scss';
 import { usePagination } from '../../hooks/usePagination';
 import ListingWrapper from '../../components/ListingWrapper/ListingWrapper';
 import Menu from '../../components/Menu/Menu';
