@@ -3,11 +3,10 @@ import { useEffect, useState } from 'react';
 import { IBeer } from '../../components/Beer/Beer';
 import Menu from '../../components/Menu/Menu';
 import { useMenu } from '../../hooks/useMenu';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, IRootState } from '../../store';
-import { paginationActions } from '../../store/pagination';
-import { Pagination } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../../store';
 import BeerGrid from '../../components/BeerGrid/BeerGrid';
+import PageNavigation from '../../components/PageNavigation/PageNavigation';
 
 const List = () => {
   // MaxCount = 325
@@ -15,19 +14,7 @@ const List = () => {
   const [loading, setLoading] = useState(false);
   const [beers, setBeers] = useState<IBeer[]>();
 
-  /* Pagination */
   const page = useSelector((state: IRootState) => state.pagination.page);
-
-  const dispatch: AppDispatch = useDispatch();
-
-  const setPage = (pageNumber: number) => {
-    dispatch(paginationActions.setPage(pageNumber));
-  };
-
-  const handlePageChange = (e: any, p: any) => {
-    setPage(p);
-  };
-  /* Pagination */
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -54,21 +41,12 @@ const List = () => {
   return (
     <>
       <div style={{ padding: '2rem' }}>
-        <div>
-          <Menu />
-          {loading && <h2>Loading...</h2>}
-          {!loading && !beers?.length && <h2>No beers with name {query}</h2>}
-          {!loading && beers && <BeerGrid beers={beers} />}
-        </div>
+        <Menu />
+        {loading && <h2>Loading...</h2>}
+        {!loading && !beers?.length && <h2>No beers with name {query}</h2>}
+        {!loading && beers && <BeerGrid beers={beers} />}
       </div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-        }}
-      >
-        <Pagination page={page} onChange={handlePageChange} count={Math.ceil(325 / limit)} color='primary' />
-      </div>
+      <PageNavigation />
     </>
   );
 };

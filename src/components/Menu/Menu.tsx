@@ -1,7 +1,8 @@
-import { Button, Select, TextField } from '@mui/material';
+import { Box, Button, Select, TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+import Toolbar from '@mui/material/Toolbar';
 import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { IRootState, AppDispatch } from '../../store';
@@ -32,38 +33,59 @@ const Menu = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: '20px' }}>
-      <FormControl>
-        <InputLabel id='limit-label'>Limit</InputLabel>
-        <Select
-          labelId='limit-label'
-          data-testid='limit'
-          value={limit}
-          label='Limit'
-          onChange={handleLimit}
-          style={{ width: '80px' }}
+    <Box sx={{ marginBottom: '2rem' }}>
+      <Toolbar
+        disableGutters
+        sx={{
+          justifyContent: 'space-between',
+          flexDirection: { xs: 'column', sm: 'row' },
+          alignItems: { xs: 'start' },
+          rowGap: '1rem',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '1rem',
+            justifyContent: { xs: 'space-between' },
+            width: { xs: '100%', sm: 'unset' },
+          }}
         >
-          <MenuItem data-testid='limit-5' value={5}>
-            5
-          </MenuItem>
-          <MenuItem data-testid='limit-10' value={10}>
-            10
-          </MenuItem>
-          <MenuItem data-testid='limit-20' value={20}>
-            20
-          </MenuItem>
-        </Select>
-      </FormControl>
-      <div style={{ display: 'flex', gap: '1rem' }}>
-        <TextField inputRef={queryRef} label='Name' variant='outlined' data-testid='query' />
-        <Button variant='contained' onClick={handleSearch}>
-          Search
-        </Button>
-        <Button variant='contained' onClick={handleReset} color='error'>
-          Reset
-        </Button>
-      </div>
-    </div>
+          <TextField inputRef={queryRef} label='Name' variant='outlined' data-testid='query' sx={{ width: '100%' }} />
+          <Box sx={{ display: 'flex', gap: '1rem' }}>
+            <Button variant='contained' onClick={handleSearch}>
+              Search
+            </Button>
+            <Button variant='contained' onClick={handleReset} color='error'>
+              Reset
+            </Button>
+          </Box>
+        </Box>
+        <Box sx={{ width: { xs: '100%', sm: 'unset' } }}>
+          <FormControl sx={{ width: { xs: '100%', sm: 'unset' } }}>
+            <InputLabel id='limit-label'>Limit</InputLabel>
+            <Select
+              labelId='limit-label'
+              data-testid='limit'
+              value={limit}
+              label='Limit'
+              onChange={handleLimit}
+              sx={{ width: { xs: '100%', sm: '140px' } }}
+            >
+              <MenuItem data-testid='limit-5' value={5}>
+                5
+              </MenuItem>
+              <MenuItem data-testid='limit-10' value={10}>
+                10
+              </MenuItem>
+              <MenuItem data-testid='limit-20' value={20}>
+                20
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </Toolbar>
+    </Box>
   );
 };
 
