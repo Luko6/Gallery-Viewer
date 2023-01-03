@@ -56,7 +56,9 @@ const Detail = () => {
               {beer.name}
             </Typography>
             <Typography variant='body1'>{beer.description}</Typography>
-            <Typography variant='body1'>First brewed in {beer.first_brewed}</Typography>
+            <Typography variant='body1'>
+              First brewed in <span style={{ fontWeight: 700 }}>{beer.first_brewed}</span>
+            </Typography>
             <Typography sx={{ fontWeight: 700, margin: '1rem 0' }}>Alcohol content: {beer.abv}%</Typography>
             <Typography>{beer.brewers_tips}</Typography>
 
