@@ -28,14 +28,12 @@ function App() {
         <CssBaseline />
         <div className='app-container'>
           <Navbar />
-          <main>
-            <Routes>
-              <Route index element={<List />} />
-              <Route path={Links.Favorites} element={<Favorites />} />
-              <Route path={Links.Details + '/:id'} element={<Detail />} />
-              <Route path='*' element={<List />} />
-            </Routes>
-          </main>
+          <Routes>
+            <Route index element={<List />} />
+            <Route path={Links.Favorites} element={<Favorites />} />
+            <Route path={Links.Details + '/:id'} element={<Detail />} />
+            <Route path='*' element={<List />} />
+          </Routes>
         </div>
       </ThemeProvider>
     </Provider>

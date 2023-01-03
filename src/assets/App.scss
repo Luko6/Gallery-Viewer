@@ -1,11 +1,7 @@
 .app-container {
   margin: 0;
-  min-height: calc(100vh - 25px - 2rem);
+  min-height: 100vh;
   background-color: #222;
   color: white;
-}
-
-main {
-  margin-top: calc(2rem + 25px);
-  padding: 2rem;
+  position: relative;
 }

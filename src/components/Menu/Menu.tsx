@@ -32,7 +32,7 @@ const Menu = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: '20px' }}>
       <FormControl>
         <InputLabel id='limit-label'>Limit</InputLabel>
         <Select
