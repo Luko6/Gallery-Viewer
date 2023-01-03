@@ -20,8 +20,6 @@ const List = () => {
         query && '&beer_name=' + query.replace(' ', '_')
       }`;
 
-      console.log(url);
-
       const res = await fetch(url);
       const data = await res.json();
 
@@ -41,7 +39,6 @@ const List = () => {
   return (
     <div>
       <Menu />
-
       {loading && <h2>Loading...</h2>}
       {!loading && !images?.length && <h2>No beers with name {query}</h2>}
       {!loading && images && (
