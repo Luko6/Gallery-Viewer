@@ -35,7 +35,8 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:@next/next/recommended"
     ]
   },
   "browserslist": {
@@ -51,6 +52,8 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^8.31.0"
+    "@next/eslint-plugin-next": "^13.1.1",
+    "eslint": "^8.31.0",
+    "eslint-config-react-app": "^7.0.1"
   }
 }
