@@ -1,13 +1,15 @@
+import React from 'react';
 import { Alert, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
 import { IBeer } from '../../components/Beer/Beer';
 import FavoriteToggle from '../../components/FavoriteToggle/FavoriteToggle';
 import Loader from '../../components/Loader/Loader';
 
-const Detail = () => {
-  const { id } = useParams();
+const DetailPage = () => {
+  const router = useRouter();
+  const { slug: id } = router.query;
 
   const [beer, setBeer] = useState<IBeer>();
   const [error, setError] = useState('');
@@ -80,4 +82,4 @@ const Detail = () => {
   );
 };
 
-export default Detail;
+export default DetailPage;

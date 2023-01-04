@@ -1,6 +1,5 @@
 import { Card, CardActions, CardHeader, CardMedia } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { NavLink } from 'react-router-dom';
 import { Details } from '../../routes';
 import FavoriteToggle from '../FavoriteToggle/FavoriteToggle';
 
@@ -19,7 +18,7 @@ const Beer = (props: IBeer) => {
   return (
     <Card>
       <CardHeader title={<Typography>{props.name}</Typography>} sx={{ height: '80px' }} />
-      <NavLink to={Details + '/' + props.id}>
+      <a href={Details + '/' + props.id}>
         <CardMedia
           component='img'
           image={props.image_url}
@@ -27,7 +26,7 @@ const Beer = (props: IBeer) => {
           height={300}
           sx={{ padding: '0.5rem', backgroundColor: '#333' }}
         />
-      </NavLink>
+      </a>
       <CardActions>
         <FavoriteToggle id={props.id} name={props.name} image_url={props.image_url} />
       </CardActions>

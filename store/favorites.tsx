@@ -2,8 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import { IBeer } from '../components/Beer/Beer';
 
 const storageKey = 'favItems';
+let savedFavorites: string | null = '';
 
-const savedFavorites = localStorage.getItem(storageKey);
+if (typeof window !== 'undefined') {
+  savedFavorites = localStorage.getItem(storageKey);
+}
+
 const initialState: { favorites: IBeer[] } = { favorites: savedFavorites ? JSON.parse(savedFavorites) : [] };
 
 const favoriteSlice = createSlice({

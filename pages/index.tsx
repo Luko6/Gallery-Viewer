@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import Menu from '../../components/Menu/Menu';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
-import BeerGrid from '../../components/BeerGrid/BeerGrid';
-import PageNavigation from '../../components/PageNavigation/PageNavigation';
 import { Alert, Box } from '@mui/material';
-import Loader from '../../components/Loader/Loader';
-import { fetchBeers } from '../../store/beers';
-import { useBeers } from '../../hooks/useBeers';
-import { usePagination } from '../../hooks/usePagination';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import Loader from '../components/Loader/Loader';
+import { AppDispatch } from '../store';
+import { fetchBeers } from '../store/beers';
+import Menu from '../components/Menu/Menu';
+import BeerGrid from '../components/BeerGrid/BeerGrid';
+import PageNavigation from '../components/PageNavigation/PageNavigation';
+import { useBeers } from '../hooks/useBeers';
+import { usePagination } from '../hooks/usePagination';
 
-const List = () => {
+function HomePage() {
   const { error, beers } = useBeers();
   const { page, limit, query } = usePagination();
   const [loading, setLoading] = useState(false);
@@ -32,6 +32,6 @@ const List = () => {
       <PageNavigation />
     </Box>
   );
-};
+}
 
-export default List;
+export default HomePage;

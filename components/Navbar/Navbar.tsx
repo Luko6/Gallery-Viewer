@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom';
 import * as Route from '../../routes';
 import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -36,9 +35,9 @@ const Navbar = () => {
               textDecoration: 'none',
             }}
           >
-            <NavLink style={navStyle} to={Route.List}>
+            <a style={navStyle} href={Route.List}>
               B33R
-            </NavLink>
+            </a>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -71,16 +70,16 @@ const Navbar = () => {
             >
               <MenuItem onClick={handleCloseNavMenu}>
                 <Typography textAlign='center'>
-                  <NavLink style={navStyle} to={Route.List}>
+                  <a style={navStyle} href={Route.List}>
                     Home
-                  </NavLink>
+                  </a>
                 </Typography>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
                 <Typography textAlign='center'>
-                  <NavLink style={navStyle} to={Route.Favorites}>
+                  <a style={navStyle} href={Route.Favorites}>
                     Favorites
-                  </NavLink>
+                  </a>
                 </Typography>
               </MenuItem>
             </Menu>
@@ -105,14 +104,14 @@ const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-              <NavLink style={navStyle} to={Route.List}>
+              <a style={navStyle} href={Route.List}>
                 Home
-              </NavLink>
+              </a>
             </Button>
             <Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-              <NavLink style={navStyle} to={Route.Favorites}>
+              <a style={navStyle} href={Route.Favorites}>
                 Favorites
-              </NavLink>
+              </a>
             </Button>
           </Box>
         </Toolbar>
