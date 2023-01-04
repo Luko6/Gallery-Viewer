@@ -8,6 +8,7 @@ import { IRootState } from '../../store';
 import BeerGrid from '../../components/BeerGrid/BeerGrid';
 import PageNavigation from '../../components/PageNavigation/PageNavigation';
 import { Box } from '@mui/material';
+import Loader from '../../components/Loader/Loader';
 
 const List = () => {
   const { limit, query } = useMenu();
@@ -33,7 +34,7 @@ const List = () => {
       fetchImages();
       setLoading(false);
     } catch {
-      alert('Failed to fetch beers');
+      alert(`No beers with the name "${query}"`);
       setLoading(false);
     }
   }, [page, limit, query]);
@@ -42,8 +43,7 @@ const List = () => {
     <>
       <Box style={{ padding: '2rem' }}>
         <Menu />
-        {loading && <h2>Loading...</h2>}
-        {!loading && !beers?.length && <h2>No beers with name {query}</h2>}
+        {loading && <Loader />}
         {!loading && beers && <BeerGrid beers={beers} />}
       </Box>
       <PageNavigation />

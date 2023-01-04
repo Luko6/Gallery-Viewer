@@ -4,11 +4,13 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { IBeer } from '../../components/Beer/Beer';
 import FavoriteToggle from '../../components/FavoriteToggle/FavoriteToggle';
+import Loader from '../../components/Loader/Loader';
 
 const Detail = () => {
   const { id } = useParams();
 
   const [beer, setBeer] = useState<IBeer>();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -19,16 +21,19 @@ const Detail = () => {
     };
 
     try {
+      setLoading(true);
       fetchDetails();
+      setLoading(false);
     } catch {
       alert('Something went wrong...');
+      setLoading(false);
     }
   }, [id]);
 
   return (
     <>
-      {!beer && <h2>Loading...</h2>}
-      {beer && (
+      {loading && <Loader />}
+      {!loading && beer && (
         <Box
           sx={{
             display: 'flex',
