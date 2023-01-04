@@ -4,32 +4,34 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import { useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { IRootState, AppDispatch } from '../../store';
+import { useDispatch } from 'react-redux';
+import { usePagination } from '../../hooks/usePagination';
+import { AppDispatch } from '../../store';
 import { paginationActions } from '../../store/pagination';
 
 const Menu = () => {
-  const limit = useSelector((state: IRootState) => state.pagination.limit);
+  const { limit } = usePagination();
+
   const queryRef = useRef<HTMLInputElement>(null);
 
   const dispatch: AppDispatch = useDispatch();
 
   const handleSearch = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(paginationActions.setQuery(queryRef.current?.value));
+    dispatch(paginationActions.updateQuery(queryRef.current?.value));
   };
 
   const handleReset = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(paginationActions.setQuery(''));
 
     if (queryRef.current) {
+      dispatch(paginationActions.updateQuery(''));
       queryRef.current.value = '';
     }
   };
 
   const handleLimit = (e: any) => {
-    dispatch(paginationActions.setLimit(e.target.value));
+    dispatch(paginationActions.updateLimit(e.target.value));
   };
 
   return (
@@ -51,7 +53,13 @@ const Menu = () => {
             width: { xs: '100%', sm: 'unset' },
           }}
         >
-          <TextField inputRef={queryRef} label='Search by Name' variant='outlined' data-testid='query' sx={{ width: '100%' }} />
+          <TextField
+            inputRef={queryRef}
+            label='Search by Name'
+            variant='outlined'
+            data-testid='query'
+            sx={{ width: '100%' }}
+          />
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Button variant='contained' onClick={handleSearch}>
               Search

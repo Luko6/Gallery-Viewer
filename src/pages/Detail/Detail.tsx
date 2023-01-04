@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
@@ -10,41 +10,44 @@ const Detail = () => {
   const { id } = useParams();
 
   const [beer, setBeer] = useState<IBeer>();
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
-      const res = await fetch(`https://api.punkapi.com/v2/beers/${id}`);
-      const data: IBeer[] = await res.json();
+      setLoading(true);
 
-      setBeer(data[0]);
+      try {
+        const res = await fetch(`https://api.punkapi.com/v2/beers/${id}`);
+        const data: IBeer[] = await res.json();
+
+        setBeer(data[0]);
+        setLoading(false);
+      } catch (err) {
+        setError('Could not fetch beer.');
+        setLoading(false);
+      }
     };
 
-    try {
-      setLoading(true);
-      fetchDetails();
-      setLoading(false);
-    } catch {
-      alert('Something went wrong...');
-      setLoading(false);
-    }
+    fetchDetails();
   }, [id]);
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: { xs: 'column', sm: 'row' },
+        maxWidth: '1200px',
+        margin: '0 auto',
+        gap: '1rem',
+        padding: '2rem',
+      }}
+    >
       {loading && <Loader />}
+      {error && <Alert severity='error'>{error}</Alert>}
       {!loading && beer && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: { xs: 'column', sm: 'row' },
-            maxWidth: '1200px',
-            margin: '0 auto',
-            gap: '1rem',
-            padding: '2rem',
-          }}
-        >
+        <>
           <Box
             sx={{
               display: 'flex',
@@ -71,9 +74,9 @@ const Detail = () => {
 
             <FavoriteToggle id={beer.id} name={beer.name} image_url={beer.image_url} />
           </Box>
-        </Box>
+        </>
       )}
-    </>
+    </Box>
   );
 };
 

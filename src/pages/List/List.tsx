@@ -1,53 +1,36 @@
 import { useEffect, useState } from 'react';
-
-import { IBeer } from '../../components/Beer/Beer';
 import Menu from '../../components/Menu/Menu';
-import { useMenu } from '../../hooks/useMenu';
-import { useSelector } from 'react-redux';
-import { IRootState } from '../../store';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store';
 import BeerGrid from '../../components/BeerGrid/BeerGrid';
 import PageNavigation from '../../components/PageNavigation/PageNavigation';
-import { Box } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import Loader from '../../components/Loader/Loader';
+import { fetchBeers } from '../../store/beers';
+import { useBeers } from '../../hooks/useBeers';
+import { usePagination } from '../../hooks/usePagination';
 
 const List = () => {
-  const { limit, query } = useMenu();
+  const { error, beers } = useBeers();
+  const { page, limit, query } = usePagination();
   const [loading, setLoading] = useState(false);
-  const [beers, setBeers] = useState<IBeer[]>();
 
-  const page = useSelector((state: IRootState) => state.pagination.page);
+  const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    const fetchImages = async () => {
-      const url = `https://api.punkapi.com/v2/beers?page=${page}&per_page=${limit}${
-        query && '&beer_name=' + query.replace(' ', '_')
-      }`;
-
-      const res = await fetch(url);
-      const data = await res.json();
-
-      setBeers(data);
-    };
-
-    try {
-      setLoading(true);
-      fetchImages();
-      setLoading(false);
-    } catch {
-      alert(`No beers with the name "${query}"`);
-      setLoading(false);
-    }
-  }, [page, limit, query]);
+    setLoading(true);
+    dispatch(fetchBeers(page, limit, query));
+    setLoading(false);
+  }, [page, limit, query, dispatch]);
 
   return (
-    <>
-      <Box style={{ padding: '2rem' }}>
-        <Menu />
-        {loading && <Loader />}
-        {!loading && beers && <BeerGrid beers={beers} />}
-      </Box>
+    <Box style={{ padding: '2rem' }}>
+      <Menu />
+      {loading && <Loader />}
+      {!loading && error && <Alert severity='error'>{error}</Alert>}
+      {!loading && beers && <BeerGrid beers={beers} />}
       <PageNavigation />
-    </>
+    </Box>
   );
 };
 
