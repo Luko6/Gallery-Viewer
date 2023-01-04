@@ -1,5 +1,4 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import store from '../../store';
 import Menu from './Menu';
@@ -15,19 +14,14 @@ const TestMenu = () => {
 test('Render menu', () => {
   render(<TestMenu />);
 
-  const limitLabel = screen.getByText(/Items per page/i);
-  expect(limitLabel).toBeInTheDocument();
+  // eslint-disable-next-line testing-library/no-node-access
+  const queryInput = screen.getByTestId('query').querySelector('input');
+  expect(queryInput).toBeInTheDocument();
 
-  expect((screen.getByTestId('limit-20') as HTMLOptionElement).selected).toBeTruthy();
+  fireEvent.change(queryInput as Element, { target: { value: 'IPA' } });
+  expect(queryInput?.value).toBe('IPA');
 
-  userEvent.selectOptions(screen.getByTestId('limit'), '10');
+  fireEvent.click(screen.getByTestId('resetbutton'));
 
-  expect((screen.getByTestId('limit-10') as HTMLOptionElement).selected).toBeTruthy();
-  expect((screen.queryByTestId('limit-5') as HTMLOptionElement).selected).toBeFalsy();
-  expect((screen.queryByTestId('limit-20') as HTMLOptionElement).selected).toBeFalsy();
-
-  const queryInput = screen.getByTestId('query');
-
-  userEvent.type(queryInput, 'IPA');
-  expect(screen.getByTestId('query')).toHaveValue('IPA');
+  expect(queryInput?.value).toBe('');
 });

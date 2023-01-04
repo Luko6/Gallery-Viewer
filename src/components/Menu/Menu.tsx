@@ -64,7 +64,7 @@ const Menu = () => {
             <Button variant='contained' onClick={handleSearch}>
               Search
             </Button>
-            <Button variant='contained' onClick={handleReset} color='error'>
+            <Button variant='contained' onClick={handleReset} color='error' data-testid="resetbutton">
               Reset
             </Button>
           </Box>

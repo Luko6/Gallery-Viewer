@@ -23,9 +23,16 @@ const FavoriteToggle = (props: IBeer) => {
   };
 
   return (
-    <Button onClick={handleFavorite} variant='outlined' color={isFavorite(props.id) ? 'error' : 'warning'}>
+    <Button
+      data-testid='favbutton'
+      onClick={handleFavorite}
+      variant='outlined'
+      color={isFavorite(props.id) ? 'error' : 'warning'}
+    >
       <FavoriteIcon sx={isFavorite(props.id) ? { color: 'red' } : { color: 'white' }} />
-      <Typography sx={{ marginLeft: '0.5rem' }}>{isFavorite(props.id) ? 'Remove Favorite' : 'Favorite'}</Typography>
+      <Typography sx={{ marginLeft: '0.5rem' }} data-testid='favtext'>
+        {isFavorite(props.id) ? 'Remove Favorite' : 'Favorite'}
+      </Typography>
     </Button>
   );
 };
